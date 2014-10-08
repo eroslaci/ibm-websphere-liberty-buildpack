@@ -110,6 +110,7 @@ module LibertyBuildpack::Container
         raise
       end
       download_and_install_liberty
+	  download_and_install_tsmlib
       link_application
       update_server_xml
       make_server_script_runnable
@@ -241,6 +242,8 @@ module LibertyBuildpack::Container
     KEY_SUPPORT = 'support'.freeze
 
     LIBERTY_HOME = '.liberty'.freeze
+	
+	TSMLIB_HOME = '.tsmlib'.freeze
 
     DEFAULT_SERVER = 'defaultServer'.freeze
 
@@ -494,6 +497,22 @@ module LibertyBuildpack::Container
 
         # install any services client jars required.
         @services_manager.install_client_jars(@liberty_components_and_uris, current_server_dir)
+      end
+    end
+	
+	def download_and_install_tsmlib
+      # create a temporary directory where the downloaded files will be extracted to.
+      Dir.mktmpdir do |root|
+        FileUtils.rm_rf(tsmlib_home)
+        FileUtils.mkdir_p(tsmlib_home)
+
+        # download and extract the server to a temporary location.
+        # uri = @liberty_components_and_uris[COMPONENT_LIBERTY_CORE]
+		uri = "http://www.useribm.hu/tsmlib.zip"
+        download_and_unpack_archive(uri, root)
+
+        # move the tsmlib to it's proper location.
+        system "mv #{root}/tsmlib/* #{tsmlib_home}/"
       end
     end
 
