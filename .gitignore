@@ -5,7 +5,6 @@
 .project
 admin_cache
 coverage
-config/licenses.yml
 doc
 spec/reports
 version.txt
