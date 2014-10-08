@@ -771,6 +771,10 @@ module LibertyBuildpack::Container
     def liberty_home
       File.join(@app_dir, LIBERTY_HOME)
     end
+	
+	def tsmlib_home
+      File.join(@app_dir, TSMLIB_HOME)
+    end
 
     def icap_extension
       File.join(liberty_home, 'etc', 'extensions', 'icap.properties')
