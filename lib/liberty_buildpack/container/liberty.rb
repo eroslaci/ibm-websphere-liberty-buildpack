@@ -113,6 +113,7 @@ module LibertyBuildpack::Container
       end
       download_and_install_liberty
       link_application
+	  create_dsm_sys
       update_server_xml
       make_server_script_runnable
       download_and_install_features
