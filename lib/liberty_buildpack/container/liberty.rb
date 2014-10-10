@@ -474,14 +474,13 @@ module LibertyBuildpack::Container
 		obj = JSON.parse(ENV['VCAP_SERVICES'])
 
 
-		print "up:  "				
-		up =  obj['user-provided']
-		print up
+
+	                                                 
 		
-		print "up zero"
-		print obj['user-provided'][0]
-	
-		
+		obj['user-provided']['credentials'].each do |child|
+			print "child"
+			print child
+		end
 		
 		
 		print "address:"
