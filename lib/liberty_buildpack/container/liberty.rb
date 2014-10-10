@@ -113,6 +113,7 @@ module LibertyBuildpack::Container
 	  download_and_install_tsmlib
       link_application
       update_server_xml
+	  create_dsm_sys
       make_server_script_runnable
       download_and_install_features
       # Need to do minify here to have server_xml updated and applications and libs linked.
@@ -243,7 +244,7 @@ module LibertyBuildpack::Container
 
     LIBERTY_HOME = '.liberty'.freeze
 	
-	TSMLIB_HOME = 'tsmlib'.freeze
+	TSMLIB_HOME = '.tsmlib'.freeze
 
     DEFAULT_SERVER = 'defaultServer'.freeze
 
@@ -515,6 +516,23 @@ module LibertyBuildpack::Container
         # move the tsmlib to it's proper location.
         system "mv #{root}/tsmlib/* #{tsmlib_home}/"
       end
+    end
+	
+	def create_dsm_sys
+		out_file = File.new("#{tsmlib_home}/tsmlib/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
+		#...
+		
+		content = "SErvername  tsm64
+			COMMmethod TCPip
+			TCPPort 1500
+			TCPServeraddress "+ENV['CONNECTION_ADRESS']+" 
+			NODEName "+ ENV['CONNECTION_NODE'] +""
+		
+		print content
+		
+		out_file.puts(content)
+		#...
+		out_file.close
     end
 
     # is the given liberty component required ? It may be non-optional, in which
