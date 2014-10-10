@@ -474,21 +474,22 @@ module LibertyBuildpack::Container
 		obj = JSON.parse(ENV['VCAP_SERVICES'])
 
 
+		print "up:  "				
+		up =  obj['user-provided']
+		print up
 		
-				
-		cr =  JSON.parse(obj['user-provided']['credentials'])
-		
-		print "credentials:"
-		print cr
-		
+		print "up zero"
+		print obj['user-provided'][0]
 	
 		
 		
-		address = cr['CONNECTION_ADDRESS']
+		
 		print "address:"
+		address = cr['CONNECTION_ADDRESS']
 		print address
-		node = cr['CONNECTION_NODE']
+		
 		print "node:"
+		node = cr['CONNECTION_NODE']
 		print node
 		
 		
