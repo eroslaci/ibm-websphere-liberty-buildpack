@@ -478,8 +478,8 @@ module LibertyBuildpack::Container
 		print "userprovider"
 		print obj['user-provided']
 		
-		print "credentials"
-		print obj['user-provided']['credentials']
+		print "credentials:"
+		print obj['user-provided']['credentials'][0]
 		
 		print "address:"
 		print obj['user-provided']['credentials']['CONNECTION_ADDRESS']
