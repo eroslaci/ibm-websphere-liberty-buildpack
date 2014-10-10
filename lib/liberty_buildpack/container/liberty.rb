@@ -476,21 +476,18 @@ module LibertyBuildpack::Container
 
 		
 				
-		cr =  JSON.parse(obj['user-provided'])
+		cr =  JSON.parse(obj['user-provided']['credentials'])
 		
 		print "credentials:"
-		print cr['credentials']
+		print cr
 		
-		thing = JSON.parse(cr['credentials'])
-		
-		print "thing: "
-		print thing
+	
 		
 		
-		address = thing['CONNECTION_ADDRESS']
+		address = cr['CONNECTION_ADDRESS']
 		print "address:"
 		print address
-		node = thing['CONNECTION_NODE']
+		node = cr['CONNECTION_NODE']
 		print "node:"
 		print node
 		
