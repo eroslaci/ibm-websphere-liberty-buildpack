@@ -455,6 +455,8 @@ module LibertyBuildpack::Container
     end
 	
 	def create_dsm_sys
+	
+		print "create_dsm_sys: "
      	obj = JSON.parse(ENV['VCAP_SERVICES'])
 
 		userProvided =  obj['user-provided']
@@ -462,8 +464,9 @@ module LibertyBuildpack::Container
 		
 		address = credentials['CONNECTION_ADDRESS']
 		node = credentials['CONNECTION_NODE']
-		
-		out_file = File.new("/home/vcap/app/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
+		dirr = @app_dir+"/dsm.sys"
+		print dirr
+		out_file = File.new(dirr, "w")
 		#...
 		content = "SErvername  tsm64
 			COMMmethod TCPip
