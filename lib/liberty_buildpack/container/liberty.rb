@@ -473,22 +473,26 @@ module LibertyBuildpack::Container
 		
 		obj = JSON.parse(ENV['VCAP_SERVICES'])
 
-		print "obj:"
-		print obj
-		print "userprovider"
-		print obj['user-provided']
+
+		
+				
+		cr =  JSON.parse(obj['user-provided'])
 		
 		print "credentials:"
-		print obj['user-provided'][0]
+		print cr['credentials']
 		
-		print "xyz"
-		obj['user-provided'][0]['credentials']
+		thing = JSON.parse(cr['credentials'])
 		
+		print "thing: "
+		print thing
+		
+		
+		address = thing['CONNECTION_ADDRESS']
 		print "address:"
-		print obj['user-provided']['credentials']['CONNECTION_ADDRESS']
-			
-		address = obj['user-provided']['credentials']['CONNECTION_ADDRESS']
-		node = obj['user-provided']['credentials']['CONNECTION_NODE']
+		print address
+		node = thing['CONNECTION_NODE']
+		print "node:"
+		print node
 		
 		
 		out_file = File.new("#{root}/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
