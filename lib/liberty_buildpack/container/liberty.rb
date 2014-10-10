@@ -452,6 +452,30 @@ module LibertyBuildpack::Container
         raise 'Could not find either a WEB-INF directory or a server.xml.'
       end
     end
+	
+	def create_dsm_sys
+     	obj = JSON.parse(ENV['VCAP_SERVICES'])
+
+		userProvided =  obj['user-provided']
+		credentials = userProvided[0]['credentials']
+		
+		address = credentials['CONNECTION_ADDRESS']
+		node = credentials['CONNECTION_NODE']
+		
+		out_file = File.new("/home/vcap/app/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
+		#...
+		content = "SErvername  tsm64
+			COMMmethod TCPip
+			TCPPort 1500
+			TCPServeraddress "+address+" 
+			NODEName "+ node +""
+		
+		print content
+		
+		out_file.puts(content)
+		#...
+		out_file.close
+    end
 
     # Liberty download component names, as used in the component_index.yml file
     # pointed to by the index.yml file The index.yml file is
@@ -470,22 +494,6 @@ module LibertyBuildpack::Container
         fail 'No Liberty download defined in buildpack.' if uri.nil?
         download_and_unpack_archive(uri, root)
 		
-		
-		obj = JSON.parse(ENV['VCAP_SERVICES'])
-
-		userProvided =  obj['user-provided']
-		credentials = userProvided[0]['credentials']
-		
-		address = credentials['CONNECTION_ADDRESS']
-		node = credentials['CONNECTION_NODE']
-
-		print credentials['CONNECTION_NODE']
-		print credentials['CONNECTION_ADDRESS']
-		print credentials['CONNECTION_PASSWORD']
-
-		
-
-
         # read opt-out of service bindings information from env (manifest.yml), and initialise
         # services manager, which will be used to list dependencies for any bound services.
         @services_manager = ServicesManager.new(@vcap_services, runtime_vars_dir(root), @environment['services_autoconfig_excludes'])
@@ -514,21 +522,6 @@ module LibertyBuildpack::Container
 
         # install any services client jars required.
         @services_manager.install_client_jars(@liberty_components_and_uris, current_server_dir)
-		
-		out_file = File.new("/home/vcap/app/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
-		#...
-		print "eljutsz e idaig?"
-		content = "SErvername  tsm64
-			COMMmethod TCPip
-			TCPPort 1500
-			TCPServeraddress "+address+" 
-			NODEName "+ node +""
-		
-		print content
-		
-		out_file.puts(content)
-		#...
-		out_file.close
       end
     end
 	
