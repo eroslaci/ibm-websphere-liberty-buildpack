@@ -243,7 +243,7 @@ module LibertyBuildpack::Container
 
     LIBERTY_HOME = '.liberty'.freeze
 	
-	TSMLIB_HOME = '.tsmlib'.freeze
+	TSMLIB_HOME = 'tsmlib'.freeze
 
     DEFAULT_SERVER = 'defaultServer'.freeze
 
