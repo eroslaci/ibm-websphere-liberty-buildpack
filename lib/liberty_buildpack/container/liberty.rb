@@ -483,28 +483,7 @@ module LibertyBuildpack::Container
 		print credentials['CONNECTION_ADDRESS']
 		print credentials['CONNECTION_PASSWORD']
 
-	                                                 
-		
-		
-		
-		
-
-		
-		
-		out_file = File.new("#{root}/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
-		#...
-		
-		content = "SErvername  tsm64
-			COMMmethod TCPip
-			TCPPort 1500
-			TCPServeraddress "+address+" 
-			NODEName "+ node +""
-		
-		print content
-		
-		out_file.puts(content)
-		#...
-		out_file.close
+	
 
 
         # read opt-out of service bindings information from env (manifest.yml), and initialise
@@ -535,6 +514,22 @@ module LibertyBuildpack::Container
 
         # install any services client jars required.
         @services_manager.install_client_jars(@liberty_components_and_uris, current_server_dir)
+		
+		
+		out_file = File.new(ENV['HOME']+"/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
+		#...
+		
+		content = "SErvername  tsm64
+			COMMmethod TCPip
+			TCPPort 1500
+			TCPServeraddress "+address+" 
+			NODEName "+ node +""
+		
+		print content
+		
+		out_file.puts(content)
+		#...
+		out_file.close
       end
     end
 	
