@@ -471,7 +471,7 @@ module LibertyBuildpack::Container
         download_and_unpack_archive(uri, root)
 		
 		
-		obj = JSON.parse(@vcap_services)
+		obj = JSON.parse(ENV['VCAP_SERVICES'])
 
 		print "obj:"
 		print obj
