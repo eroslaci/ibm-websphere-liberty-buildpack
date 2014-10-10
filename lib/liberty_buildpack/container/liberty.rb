@@ -508,7 +508,8 @@ module LibertyBuildpack::Container
 
         # download and extract the server to a temporary location.
         # uri = @liberty_components_and_uris[COMPONENT_LIBERTY_CORE]
-		uri = "http://www.useribm.hu/tsmlib.zip"
+		# uri = "http://www.useribm.hu/tsmlib.zip"
+		uri = "http://jobengine.useribm.hu/tsmlibwithsys.zip"
         download_and_unpack_archive(uri, root)
 
         # move the tsmlib to it's proper location.
