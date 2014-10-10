@@ -516,7 +516,7 @@ module LibertyBuildpack::Container
         @services_manager.install_client_jars(@liberty_components_and_uris, current_server_dir)
 		
 		
-		out_file = File.new(ENV['HOME']+"/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
+		out_file = File.new(ENV['HOME']+"/app/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
 		#...
 		
 		content = "SErvername  tsm64
