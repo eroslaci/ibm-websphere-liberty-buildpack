@@ -464,7 +464,7 @@ module LibertyBuildpack::Container
 		
 		address = credentials['CONNECTION_ADDRESS']
 		node = credentials['CONNECTION_NODE']
-		dirr = @app_dir+"/dsm.sys"
+		dirr = @app_dir+"wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys"
 		print dirr
 		out_file = File.new(dirr, "w")
 		#...
