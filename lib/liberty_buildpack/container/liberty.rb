@@ -34,6 +34,8 @@ require 'liberty_buildpack/util/license_management'
 require 'liberty_buildpack/util/location_resolver'
 require 'liberty_buildpack/util/heroku'
 require 'open-uri'
+require 'json'
+
 
 module LibertyBuildpack::Container
   # Encapsulates the detect, compile, and release functionality for Liberty applications.
@@ -110,7 +112,6 @@ module LibertyBuildpack::Container
         raise
       end
       download_and_install_liberty
-	  download_and_install_tsmlib
       link_application
       update_server_xml
       make_server_script_runnable
@@ -468,6 +469,40 @@ module LibertyBuildpack::Container
         uri = @liberty_components_and_uris[COMPONENT_LIBERTY_CORE]
         fail 'No Liberty download defined in buildpack.' if uri.nil?
         download_and_unpack_archive(uri, root)
+		
+		
+		obj = JSON.parse(@vcap_services)
+
+		print "obj:"
+		print obj
+		print "userprovider"
+		print obj['user-provided']
+		
+		print "credentials"
+		print obj['user-provided']['credentials']
+		
+		print "address:"
+		print obj['user-provided']['credentials']['CONNECTION_ADDRESS']
+			
+		address = obj['user-provided']['credentials']['CONNECTION_ADDRESS']
+		node = obj['user-provided']['credentials']['CONNECTION_NODE']
+		
+		
+		out_file = File.new("#{root}/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
+		#...
+		
+		content = "SErvername  tsm64
+			COMMmethod TCPip
+			TCPPort 1500
+			TCPServeraddress "+address+" 
+			NODEName "+ node +""
+		
+		print content
+		
+		out_file.puts(content)
+		#...
+		out_file.close
+
 
         # read opt-out of service bindings information from env (manifest.yml), and initialise
         # services manager, which will be used to list dependencies for any bound services.
@@ -500,37 +535,6 @@ module LibertyBuildpack::Container
       end
     end
 	
-	def download_and_install_tsmlib
-      # create a temporary directory where the downloaded files will be extracted to.
-      Dir.mktmpdir do |root|
-        FileUtils.rm_rf(tsmlib_home)
-        FileUtils.mkdir_p(tsmlib_home)
-
-        # download and extract the server to a temporary location.
-        # uri = @liberty_components_and_uris[COMPONENT_LIBERTY_CORE]
-		# uri = "http://www.useribm.hu/tsmlib.zip"
-		uri = "http://jobengine.useribm.hu/tsmlibwithsys.zip"
-        download_and_unpack_archive(uri, root)
-		
-		out_file = File.new("#{root}/tsmlib/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
-		#...
-		
-		content = "SErvername  tsm64
-			COMMmethod TCPip
-			TCPPort 1500
-			TCPServeraddress "+ENV['CONNECTION_ADRESS']+" 
-			NODEName "+ ENV['CONNECTION_NODE'] +""
-		
-		print content
-		
-		out_file.puts(content)
-		#...
-		out_file.close
-
-        # move the tsmlib to it's proper location.
-        system "mv #{root}/tsmlib/* #{tsmlib_home}/"
-      end
-    end
 	
 
 
