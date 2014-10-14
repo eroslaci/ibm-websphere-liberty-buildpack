@@ -476,14 +476,15 @@ module LibertyBuildpack::Container
     end
 	
 	def set_toolbox_variables
+	    abs = File.join(WLP_PATH, USR_PATH, SERVERS_PATH, server_name)
 		#folders  = Dir.entries(@app_dir+"/wlp/usr/servers").select {|entry| File.directory? File.join(@app_dir+"/wlp/usr/servers",entry) and !(entry =='.' || entry == '..') }
 		#print "\nFound server directory name: "+folders[0]
 		#print "\nDSMI_CONFIG: "+current_server_dir+"/opt/tivoli/tsm/client/api/bin64/dsm.opt"
-		print "\nLD_LIBRARY_PATH: $HOME/"+server_name+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+server_name+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+server_name+"/toolboxlib"
-		ENV['DSMI_CONFIG'] = "$HOME/"+server_name+"/opt/tivoli/tsm/client/api/bin64/dsm.opt"
-		ENV['DSMI_DIR'] = "$HOME/"+server_name+"/opt/tivoli/tsm/client/api/bin64/"
-		ENV['DSMI_LOG'] = "$HOME/"+server_name+"/log"
-		ENV['LD_LIBRARY_PATH'] = "$HOME/"+server_name+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+server_name+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+server_name+"/toolboxlib"
+		print "\nLD_LIBRARY_PATH: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib"
+		ENV['DSMI_CONFIG'] = "$HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/dsm.opt"
+		ENV['DSMI_DIR'] = "$HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/"
+		ENV['DSMI_LOG'] = "$HOME/"+abs+"/log"
+		ENV['LD_LIBRARY_PATH'] = "$HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib"
 		
     end
 
