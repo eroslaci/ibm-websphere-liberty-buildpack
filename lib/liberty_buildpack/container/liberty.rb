@@ -479,7 +479,13 @@ module LibertyBuildpack::Container
 	
 	def set_toolbox_variables
 		folders  = Dir.entries(@app_dir+"/wlp/usr/servers").select {|entry| File.directory? File.join(@app_dir+"/wlp/usr/servers",entry) and !(entry =='.' || entry == '..') }
-		print folders[0]
+		print "\nFound server directory name: "+folders[0]
+		
+		ENV['DSMI_CONFIG'] = @app_dir+"/wlp/usr/servers/"+folders[0]+"/opt/tivoli/tsm/client/api/bin64/dsm.opt"
+		ENV['DSMI_DIR'] = @app_dir+"/wlp/usr/servers/"+folders[0]+"/opt/tivoli/tsm/client/api/bin64/"
+		ENV['DSMI_LOG'] = @app_dir+"/wlp/usr/servers/"+folders[0]+"/log"
+		ENV['LD_LIBRARY_PATH'] = @app_dir+"/wlp/usr/servers/"+folders[0]+"//opt/tivoli/tsm/client/api/bin64:"+@app_dir+"/wlp/usr/servers/"+folders[0]+"/usr/local/ibm/gsk8_64/lib64:"+@app_dir+"/wlp/usr/servers/"+folders[0]+"/toolboxlib"
+		
     end
 
 
