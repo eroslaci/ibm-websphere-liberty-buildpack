@@ -479,7 +479,7 @@ module LibertyBuildpack::Container
 	
 	def set_toolbox_variables
 		folders  = Dir.entries(@app_dir+"/wlp/usr/servers").select {|entry| File.directory? File.join(@app_dir+"/wlp/usr/servers",entry) and !(entry =='.' || entry == '..') }
-		print folder[0]
+		print folders[0]
     end
 
 
