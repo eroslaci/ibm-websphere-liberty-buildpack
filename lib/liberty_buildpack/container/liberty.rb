@@ -246,8 +246,6 @@ module LibertyBuildpack::Container
     KEY_SUPPORT = 'support'.freeze
 
     LIBERTY_HOME = '.liberty'.freeze
-	
-	TSMLIB_HOME = '.tsmlib'.freeze
 
     DEFAULT_SERVER = 'defaultServer'.freeze
 
@@ -794,10 +792,6 @@ module LibertyBuildpack::Container
 
     def liberty_home
       File.join(@app_dir, LIBERTY_HOME)
-    end
-	
-	def tsmlib_home
-      File.join(@app_dir, TSMLIB_HOME)
     end
 
     def icap_extension
