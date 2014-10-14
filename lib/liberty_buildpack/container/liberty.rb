@@ -35,6 +35,7 @@ require 'liberty_buildpack/util/location_resolver'
 require 'liberty_buildpack/util/heroku'
 require 'open-uri'
 require 'json'
+require 'pathname'
 
 
 module LibertyBuildpack::Container
@@ -114,6 +115,7 @@ module LibertyBuildpack::Container
       download_and_install_liberty
       link_application
 	  create_dsm_sys
+	  set_toolbox_variables
       update_server_xml
       make_server_script_runnable
       download_and_install_features
@@ -474,6 +476,12 @@ module LibertyBuildpack::Container
 		#...
 		out_file.close
     end
+	
+	def set_toolbox_variables
+		folders  = Dir.entries(@app_dir+"/wlp/usr/servers").select {|entry| File.directory? File.join(@app_dir+"/wlp/usr/servers",entry) and !(entry =='.' || entry == '..') }
+		print folder[0]
+    end
+
 
     # Liberty download component names, as used in the component_index.yml file
     # pointed to by the index.yml file The index.yml file is
