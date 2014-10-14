@@ -481,12 +481,30 @@ module LibertyBuildpack::Container
 		#print "\nFound server directory name: "+folders[0]
 		#print "\nDSMI_CONFIG: "+current_server_dir+"/opt/tivoli/tsm/client/api/bin64/dsm.opt"
 		print "\nLD_LIBRARY_PATH: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib"
-		open(File.expand_path('../../../config/env.yml', File.dirname(__FILE__)), 'a') { |f|
-		f << "DSMI_CONFIG: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/dsm.opt\n"
-		f << "DSMI_DIR: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/\n"
-		f << "DSMI_LOG: $HOME/"+abs+"/log\n"
-		f << "LD_LIBRARY_PATH: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib\n"
-		}
+		
+		outa_file = File.new(File.expand_path('../../../config/env.yml', File.dirname(__FILE__)), "w")
+		contenta = "DSMI_CONFIG: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/dsm.opt\n"+"DSMI_DIR: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/\n"+"DSMI_LOG: $HOME/"+abs+"/log\n"+"LD_LIBRARY_PATH: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib\n"
+		
+		print contenta
+		
+		outa_file.puts(content)
+		outa_file.close
+		#open(File.expand_path('../../../config/env.yml', File.dirname(__FILE__)), 'a') { |f|
+		#f << "DSMI_CONFIG: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/dsm.opt\n"
+		#f << "DSMI_DIR: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/\n"
+		#f << "DSMI_LOG: $HOME/"+abs+"/log\n"
+		#f << "LD_LIBRARY_PATH: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib\n"
+		#}
+		
+		
+		
+		file = File.open(File.expand_path('../../../config/env.yml', File.dirname(__FILE__)), 'r')
+		while !file.eof?
+		   line = file.readline
+		   puts line
+		end
+				
+		
 		#ENV['DSMI_CONFIG'] = "$HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/dsm.opt"
 		#ENV['DSMI_DIR'] = "$HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/"
 		#ENV['DSMI_LOG'] = "$HOME/"+abs+"/log"
