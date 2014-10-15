@@ -463,7 +463,7 @@ module LibertyBuildpack::Container
 		
 		address = credentials['CONNECTION_ADDRESS']
 		node = credentials['CONNECTION_NODE']
-		out_file = File.new(@app_dir+"/wlp/usr/servers/toolboxServer/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
+		out_file = File.new(@app_dir+"/"+File.join(WLP_PATH, USR_PATH, SERVERS_PATH, server_name)+"/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
 		content = "SErvername  tsm64
 			COMMmethod TCPip
 			TCPPort 1500
@@ -478,7 +478,7 @@ module LibertyBuildpack::Container
 	def set_toolbox_variables
 	    abs = File.join(WLP_PATH, USR_PATH, SERVERS_PATH, server_name)
 		outa_file = File.new(File.expand_path('../../../config/env.yml', File.dirname(__FILE__)), "w")
-		contenta = "TSM_EXT: $HOME/"+abs+"/ext\nTSM_RA: $HOME/"+abs+"/ra/tsmra.rar\nTSM_APP: $HOME/"+abs+"/jax-rs-tsm-1.0-SNAPSHOT.war\nDSMI_CONFIG: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/dsm.opt\n"+"DSMI_DIR: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/\n"+"DSMI_LOG: $HOME/"+abs+"/log\n"+"LD_LIBRARY_PATH: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib\n"
+		contenta = "TSM_ROOT: $HOME/"+abs+"\nDSMI_CONFIG: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/dsm.opt\n"+"DSMI_DIR: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64/\n"+"DSMI_LOG: $HOME/"+abs+"/log\n"+"LD_LIBRARY_PATH: $HOME/"+abs+"/opt/tivoli/tsm/client/api/bin64:$HOME/"+abs+"/usr/local/ibm/gsk8_64/lib64:$HOME/"+abs+"/toolboxlib\n"
 		print "\n env.yml content: \n"+contenta
 		
 		outa_file.puts(contenta)
