@@ -462,11 +462,12 @@ module LibertyBuildpack::Container
 		credentials = userProvided[0]['credentials']
 		
 		address = credentials['CONNECTION_ADDRESS']
+		port = credentials['CONNECTION_PORT']
 		node = credentials['CONNECTION_NODE']
 		out_file = File.new(@app_dir+"/"+File.join(WLP_PATH, USR_PATH, SERVERS_PATH, server_name)+"/opt/tivoli/tsm/client/api/bin64/dsm.sys", "w")
 		content = "SErvername  tsm64
 			COMMmethod TCPip
-			TCPPort 1500
+			TCPPort "+port+"
 			TCPServeraddress "+address+" 
 			NODEName "+ node +""
 		
